@@ -37,6 +37,9 @@ extern NSString * const kCapturerAssociationKey;
 -(void)mediaStreamTrackSwitchCamera:(RTCMediaStreamTrack *)track
                              result:(FlutterResult) result;
 
+-(void)mediaStreamTrackSwitchCameraDesktop:(NSString *)deviceId
+                                    result:(FlutterResult) result;
+
 -(void)mediaStreamTrackCaptureFrame:(RTCMediaStreamTrack *)track
                              toPath:(NSString *) path
                              result:(FlutterResult) result;

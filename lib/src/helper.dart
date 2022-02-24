@@ -51,8 +51,8 @@ class Helper {
 
     if (!kIsWeb) {
       return WebRTC.invokeMethod(
-        'mediaStreamTrackSwitchCamera',
-        <String, dynamic>{'trackId': track.id},
+        'mediaStreamTrackSwitchCameraDesktop',
+        <String, dynamic>{'deviceId': deviceId},
       ).then((value) => value ?? false);
     }
 

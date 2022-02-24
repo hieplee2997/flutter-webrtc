@@ -560,6 +560,10 @@
                 result([FlutterError errorWithCode:[@"Track is class of " stringByAppendingString:[[track class] description]] message:nil details:nil]);
             }
         }
+    } else if ([@"mediaStreamTrackSwitchCameraDesktop" isEqualToString:call.method]) {
+        NSDictionary* argsMap = call.arguments;
+        NSString* deviceId = argsMap[@"deviceId"];
+        [self mediaStreamTrackSwitchCameraDesktop:deviceId result:result];
     } else if ([@"setVolume" isEqualToString:call.method]){
         NSDictionary* argsMap = call.arguments;
         NSString* trackId = argsMap[@"trackId"];
