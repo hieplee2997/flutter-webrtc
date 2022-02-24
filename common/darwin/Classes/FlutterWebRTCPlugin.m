@@ -557,6 +557,10 @@
                 result([FlutterError errorWithCode:[@"Track is class of " stringByAppendingString:[[track class] description]] message:nil details:nil]);
             }
         }
+    } else if ([@"mediaStreamTrackSwitchCameraDesktop" isEqualToString:call.method]) {
+        NSDictionary* argsMap = call.arguments;
+        NSString* deviceId = argsMap[@"deviceId"];
+        [self mediaStreamTrackSwitchCameraDesktop:deviceId result:result];
     } else if ([@"setVolume" isEqualToString:call.method]){
         NSDictionary* argsMap = call.arguments;
         NSString* trackId = argsMap[@"trackId"];
@@ -960,6 +964,24 @@
         }
 
         result(@{ @"transceivers":transceivers});
+    } else if ([@"setAllTransceiverToOnlyDirection" isEqualToString:call.method]) {
+        NSDictionary* argsMap = call.arguments;
+        NSString* peerConnectionId = argsMap[@"peerConnectionId"];
+        NSString* direction = argsMap[@"direction"];
+        RTCPeerConnection* peerConnection = self.peerConnections[peerConnectionId];
+        
+        if (peerConnection == nil) {
+            result([FlutterError errorWithCode:[NSString stringWithFormat:@"%@Failed",call.method]
+            message:[NSString stringWithFormat:@"Error: peerConnection not found!"]
+            details:nil]);
+            return;
+        }
+        
+        for (RTCRtpTransceiver *transceiver in peerConnection.transceivers) {
+            NSLog(@"direcntion %@", [self transceiverDirectionString:transceiver.direction]);
+            if([[self transceiverDirectionString:transceiver.direction] isEqualToString:@"sendrecv"]) [transceiver setDirection:[self stringToTransceiverDirection:direction] error:nil];
+        }
+        result(nil);
     } else {
         result(FlutterMethodNotImplemented);
     }

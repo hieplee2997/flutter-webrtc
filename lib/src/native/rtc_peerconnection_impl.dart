@@ -480,6 +480,18 @@ class RTCPeerConnectionNative extends RTCPeerConnection {
   }
 
   @override
+  Future<void> setAllTransceiverToOnlyDirection(TransceiverDirection direction) async{
+    try {
+      await WebRTC.invokeMethod('setAllTransceiverToOnlyDirection',<String, dynamic>{
+        'peerConnectionId': _peerConnectionId,
+        'direction': typeRtpTransceiverDirectionToString[direction]
+      });
+    } on PlatformException catch (e) {
+      throw 'Unable to set all transceiver to send only:: ${e.message}';
+    }
+  }
+
+  @override
   Future<RTCRtpSender> addTrack(MediaStreamTrack track,
       [MediaStream? stream]) async {
     try {
