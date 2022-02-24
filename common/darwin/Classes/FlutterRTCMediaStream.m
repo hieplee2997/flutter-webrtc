@@ -634,6 +634,26 @@ typedef void (^NavigatorUserMediaSuccessCallback)(RTCMediaStream *mediaStream);
     }];
 }
 
+-(void)mediaStreamTrackSwitchCameraDesktop:(NSString *)deviceId result:(FlutterResult)result
+{
+    if (!self.videoCapturer) {
+        NSLog(@"Video capture is null. Can't switch camera");
+        return;
+    }
+    AVCaptureDevice *videoDevice = [AVCaptureDevice deviceWithUniqueID:deviceId];
+    if (videoDevice) {
+        AVCaptureDeviceFormat *selectedFormat = [self selectFormatForDevice:videoDevice];
+        [self.videoCapturer startCaptureWithDevice:videoDevice format:selectedFormat fps:[self selectFpsForFormat:selectedFormat] completionHandler:^(NSError* error) {
+            if (error != nil) {
+                result([FlutterError errorWithCode:@"Error while switching camera" message:@"Error while switching camera" details:error]);
+            } else {
+                result([NSNumber numberWithBool:self._usingFrontCamera]);
+            }
+        }];
+    }
+    
+}
+
 -(void)mediaStreamTrackCaptureFrame:(RTCVideoTrack *)track toPath:(NSString *) path result:(FlutterResult)result
 {
     self.frameCapturer = [[FlutterRTCFrameCapturer alloc] initWithTrack:track toPath:path result:result];
