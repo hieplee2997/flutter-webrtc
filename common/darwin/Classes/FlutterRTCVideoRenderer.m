@@ -228,7 +228,7 @@
     if(_pixelBufferRef == nil || (size.width != _frameSize.width || size.height != _frameSize.height))
     {
         if(_pixelBufferRef){
-            CVBufferRelease(_pixelBufferRef);
+            _pixelBufferRef = nil;
         }
         NSDictionary *pixelAttributes = @{(id)kCVPixelBufferIOSurfacePropertiesKey : @{}};
         CVPixelBufferCreate(kCFAllocatorDefault,
