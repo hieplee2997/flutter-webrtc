@@ -774,7 +774,7 @@ void FlutterWebRTC::HandleMethodCall(
       return;
     }
 
-    const std::string rtpTransceiverId = findString(params, "rtpTransceiverId");
+    const std::string rtpTransceiverId = findString(params, "transceiverId");
     if (0 < rtpTransceiverId.size()) {
       if (pc == nullptr) {
         result->Error("rtpTransceiverGetCurrentDirection",
@@ -802,7 +802,7 @@ void FlutterWebRTC::HandleMethodCall(
       return;
     }
 
-    const std::string rtpTransceiverId = findString(params, "rtpTransceiverId");
+    const std::string rtpTransceiverId = findString(params, "transceiverId");
     if (0 < rtpTransceiverId.size()) {
       if (pc == nullptr) {
         result->Error("rtpTransceiverGetCurrentDirection",
